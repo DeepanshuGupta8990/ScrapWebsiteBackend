@@ -11,5 +11,8 @@ router.get('/getAllData', getAllData);
 router.get('/getData/:id', getData);
 router.delete('/deleteData', deleteData);
 router.get('/downloadCSV', downloadCSV);
+router.get('health',(req,res)=>{
+    res.send("Working fine")
+})
 
 module.exports = router;
