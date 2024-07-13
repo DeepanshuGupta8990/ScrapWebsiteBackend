@@ -5,6 +5,7 @@ const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
 const ScrapedData = require('../models/ScrapedData');
+require("dotenv").config();
 
 const scrapeData = async (req, res) => {
     const url = req.body.url;
@@ -45,7 +46,15 @@ const scrapeData = async (req, res) => {
             fs.mkdirSync(screenshotsDir);
         }
 
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({
+            args:[
+                "--disable-setuid-sandbox",
+                "--no-sandbox",
+                "--single-process",
+                "--no-zygote"
+            ]
+            executablePath : process.env.PUPPETEER_EXECUTABLE_PATH
+        });
         const page = await browser.newPage();
         await page.goto(url, { waitUntil: 'networkidle2' });
         const screenshotFilename = `screenshot-${uuidv4()}.png`;
