@@ -52,7 +52,7 @@ const scrapeData = async (req, res) => {
                 "--no-sandbox",
                 "--single-process",
                 "--no-zygote"
-            ]
+            ],
             executablePath : process.env.PUPPETEER_EXECUTABLE_PATH
         });
         const page = await browser.newPage();
